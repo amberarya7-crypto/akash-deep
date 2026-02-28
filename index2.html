@@ -1,0 +1,651 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akash Deep | Future Doctor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --deep: #0a0e1a;
+            --navy: #0d1b35;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --cream: #f5f0e8;
+            --white: #ffffff;
+            --muted: rgba(255,255,255,0.5);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--deep);
+            color: var(--cream);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── ANIMATED BACKGROUND ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(13,27,53,0.9) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── PARTICLES ── */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1.5); }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        .hero-inner {
+            text-align: center;
+            transform-style: preserve-3d;
+            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes heroReveal {
+            0% { opacity: 0; transform: translateY(60px) rotateX(15deg); }
+            100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        }
+
+        /* ── PHOTO FRAME ── */
+        .photo-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 2rem;
+            animation: heroReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .photo-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(var(--gold), var(--gold-light), var(--gold), transparent, var(--gold));
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .photo-ring-inner {
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: var(--deep);
+        }
+
+        .photo-wrapper img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .photo-placeholder {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy), #1a2a4a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            z-index: 1;
+        }
+
+        /* ── TITLE ── */
+        .hero-tag {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeUp 1s 0.2s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            animation: fadeUp 1s 0.4s both;
+        }
+
+        h1 span { color: var(--gold); }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 1s 0.6s both;
+        }
+
+        /* ── PILL BADGES ── */
+        .badges {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 1s 0.8s both;
+        }
+
+        .badge {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            backdrop-filter: blur(10px);
+            background: rgba(201,168,76,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            background: rgba(201,168,76,0.15);
+            border-color: var(--gold);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        /* ── SCROLL INDICATOR ── */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            animation: fadeUp 1s 1.5s both;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(var(--gold), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 3rem;
+            line-height: 1.1;
+        }
+
+        h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            margin: 0 auto 4rem;
+        }
+
+        /* ── EDUCATION CARDS ── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201,168,76,0.12);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.4s ease;
+            cursor: default;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.08);
+            border-color: rgba(201,168,76,0.3);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .card-sub {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .card-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(201,168,76,0.1);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 100px;
+            font-size: 0.72rem;
+            color: var(--gold-light);
+            letter-spacing: 0.1em;
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .skill-item:hover {
+            background: rgba(201,168,76,0.06);
+            border-color: rgba(201,168,76,0.2);
+            transform: translateX(6px);
+        }
+
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(201,168,76,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .skill-text {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* ── ACHIEVEMENTS ── */
+        .achieve-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .achieve-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .achieve-item:hover {
+            transform: translateX(10px);
+            background: rgba(201,168,76,0.05);
+            border-color: rgba(201,168,76,0.2);
+            box-shadow: -4px 0 0 var(--gold);
+        }
+
+        .achieve-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: rgba(201,168,76,0.2);
+            min-width: 2.5rem;
+            line-height: 1;
+        }
+
+        .achieve-text {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* ── ABOUT ── */
+        .about-box {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(201,168,76,0.12);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .about-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 60px rgba(201,168,76,0.06);
+        }
+
+        .about-box::after {
+            content: '🩺';
+            position: absolute;
+            bottom: -1rem;
+            right: 2rem;
+            font-size: 8rem;
+            opacity: 0.04;
+        }
+
+        .about-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-weight: 300;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer span { color: var(--gold); }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── 3D CARD TILT ── */
+        .tilt-container { perspective: 800px; }
+    </style>
+</head>
+<body>
+
+<!-- Floating Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-inner">
+        <p class="hero-tag">Portfolio</p>
+
+        <div class="photo-wrapper">
+            <div class="photo-ring"></div>
+            <div class="photo-ring-inner"></div>
+            <div class="photo-placeholder">👨‍⚕️</div>
+        <img src="img1.jpeg" alt="Akash Deep"> 
+        </div>
+
+        <h1>Akash <span>Deep</span></h1>
+        <p class="subtitle">NEET Aspirant &nbsp;•&nbsp; Biology Student &nbsp;•&nbsp; Future Doctor</p>
+
+        <div class="badges">
+            <span class="badge">🩺 NEET 2025</span>
+            <span class="badge">🧬 Biology</span>
+            <span class="badge">📍 Hajipur, Bihar</span>
+        </div>
+    </div>
+
+    <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</div>
+
+<!-- ── EDUCATION ── -->
+<section class="reveal">
+    <p class="section-label">Academic Journey</p>
+    <h2>My <em>Education</em></h2>
+
+    <div class="edu-grid">
+        <div class="card tilt-container">
+            <div class="card-icon">🎓</div>
+            <div class="card-title">Class 12 — Biology</div>
+            <div class="card-sub">Guru Vashistha Vidyayan<br>Hajipur, Bihar</div>
+            <span class="card-badge">PCB Stream</span>
+        </div>
+        <div class="card tilt-container">
+            <div class="card-icon">📚</div>
+            <div class="card-title">Class 10</div>
+            <div class="card-sub">Gurukul Vidyapeeth<br>Hajipur, Bihar</div>
+            <span class="card-badge">Strong Foundation</span>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SKILLS ── -->
+<section class="reveal">
+    <p class="section-label">What I Bring</p>
+    <h2>Core <em>Skills</em></h2>
+
+    <div class="skills-grid">
+        <div class="skill-item">
+            <div class="skill-icon">🧬</div>
+            <span class="skill-text">Strong Biology Concepts</span>
+        </div>
+        <div class="skill-item">
+            <div class="skill-icon">🫀</div>
+            <span class="skill-text">Human Anatomy Knowledge</span>
+        </div>
+        <div class="skill-item">
+            <div class="skill-icon">⏱️</div>
+            <span class="skill-text">Time Management</span>
+        </div>
+        <div class="skill-item">
+            <div class="skill-icon">📖</div>
+            <span class="skill-text">Consistent Study Discipline</span>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── ACHIEVEMENTS ── -->
+<section class="reveal">
+    <p class="section-label">Milestones</p>
+    <h2>Achieve<em>ments</em></h2>
+
+    <div class="achieve-list">
+        <div class="achieve-item">
+            <div class="achieve-num">01</div>
+            <div class="achieve-text">Active & Dedicated NEET Aspirant — consistently preparing for India's premier medical entrance</div>
+        </div>
+        <div class="achieve-item">
+            <div class="achieve-num">02</div>
+            <div class="achieve-text">Strong Academic Background in Science — excelling in Biology, Chemistry & Physics</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── ABOUT ── -->
+<section class="reveal">
+    <p class="section-label">The Story</p>
+    <h2>About <em>Me</em></h2>
+
+    <div class="about-box tilt-container">
+        <p class="about-text">
+            I am a <strong>dedicated biology student</strong> from Hajipur, Bihar, 
+            with a singular mission — to crack NEET and pursue <strong>MBBS</strong>. 
+            Every day, I wake up with purpose: to study, to grow, and to move one step 
+            closer to becoming a <strong>compassionate doctor</strong> who makes a real 
+            difference in people's lives. 🩺
+        </p>
+    </div>
+</section>
+
+<footer>
+    <p>Crafted with 💛 by <span>Akash Deep</span> &nbsp;|&nbsp; Future Doctor of India</p>
+</footer>
+
+<script>
+    // ── Particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `
+            left: ${Math.random() * 100}%;
+            width: ${Math.random() * 3 + 1}px;
+            height: ${Math.random() * 3 + 1}px;
+            animation-duration: ${Math.random() * 15 + 10}s;
+            animation-delay: ${Math.random() * 10}s;
+        `;
+        container.appendChild(p);
+    }
+
+    // ── Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ── 3D Tilt on Cards
+    document.querySelectorAll('.tilt-container').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `
+                perspective(800px)
+                rotateY(${x * 12}deg)
+                rotateX(${-y * 12}deg)
+                translateY(-8px)
+            `;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+            setTimeout(() => card.style.transition = '', 500);
+        });
+    });
+</script>
+</body>
+</html>
